@@ -55,3 +55,4 @@ CNA <- CNA[-1]
 write.csv(clinicaldata, "data/clincal.csv")
 write.csv(mRNA, "data/mRNA.csv")
 write.csv(CNA, "data/CNA.csv")
+
