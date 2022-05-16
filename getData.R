@@ -1,0 +1,26 @@
+# pack <- "D:/Download/cgdsr_1.3.0.tar.gz"
+# install.packages(pack, repos=NULL, type="source")
+
+library(cgdsr)
+
+# Create CGDS object
+mycgds = CGDS("http://www.cbioportal.org/")
+
+# Test the CGDS endpoint URL using a few simple API tests
+test(mycgds) 
+
+# Get list of cancer studies at server
+all_TCGA_studies <- getCancerStudies(mycgds)
+
+# Get available case lists (collection of samples) for a given cancer study  
+mycancerstudy = getCancerStudies(mycgds)[50,1]
+mycaselist = getCaseLists(mycgds,mycancerstudy)[8,1]
+
+# Get available genetic profiles
+mygeneticprofile = getGeneticProfiles(mycgds,mycancerstudy)[14,1]
+
+# Get data slices for a specified list of genes, genetic profile and case list
+data <- getProfileData(mycgds,c('BRCA1', 'BRCA2'),mygeneticprofile,mycaselist)
+
+# Get clinical data for the case list
+clinicaldata = getClinicalData(mycgds,mycaselist)
