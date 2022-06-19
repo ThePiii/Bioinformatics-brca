@@ -19,7 +19,7 @@ x = mRNA$A1BG
 diverse <- function(x){
   c <- quantile(x,c(0,0.25,0.5,0.75,1), na.rm = T)
   a <- c[2:5] - c[1:4]
-  ifelse(max(a)<1e6*min(a),TRUE, FALSE)  # 0 no prob 
+  ifelse(max(a)<1e3*min(a),TRUE, FALSE)  # 0 no prob 
 }
 
 
@@ -39,7 +39,6 @@ sum(is.na(new.mRNA)) # 没有了，但是没想到这个时候mRNA的列数比CN
 
 # 计算方差降维
 CNA.no_outliers <- subset(new.CNA[,2:length(new.CNA)], select = apply(new.CNA[,2:length(new.CNA)], 2, diverse))
-
 CNA.var <- apply(CNA.no_outliers, 2, var)
 CNA.reduction <- CNA.no_outliers %>%
   select(order(-CNA.var)[1:500])  # order默认升序，需要加个负号
